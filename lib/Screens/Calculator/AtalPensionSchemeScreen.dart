@@ -1,0 +1,479 @@
+// ignore_for_file: file_names, deprecated_member_use
+
+import 'dart:io';
+
+import 'package:emi_calculator/Constants/ClickCount.dart';
+import 'package:emi_calculator/Constants/Color.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:screenshot/screenshot.dart';
+import 'package:share_plus/share_plus.dart';
+
+class AtalPensionSchemeScreen extends StatefulWidget {
+  const AtalPensionSchemeScreen({super.key});
+
+  @override
+  State<AtalPensionSchemeScreen> createState() => _MyWidgetState();
+}
+
+class _MyWidgetState extends State<AtalPensionSchemeScreen> {
+  ScreenshotController screenshotController = ScreenshotController();
+  final TextEditingController _ageController =
+      TextEditingController();
+  final GlobalKey<FormState> _formkey = GlobalKey<FormState>();
+  String dropdownvalue1 = 'Rs. 1,000';
+  var items1 = [
+    'Rs. 1,000',
+    'Rs. 2,000',
+    'Rs. 3,000',
+    'Rs. 4,000',
+    'Rs. 5,000',
+
+  ];
+  String dropdownvalue2 = 'Monthly';
+  var items2 = [
+    'Monthly',
+    'Quaterly',
+    'Half Yearly',
+
+  ];
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold( backgroundColor: Appcolor.white,
+      appBar: AppBar(
+        backgroundColor: Appcolor.white,
+        elevation: 1,
+        leading: GestureDetector(
+            onTap: () {
+              Navigator.of(context).pop();
+            },
+            child:
+                const Icon(Icons.arrow_back_outlined, color: Appcolor.black)),
+        title: const Text(
+          'Atal Pension Scheme (APS)',
+          style: TextStyle(
+              color: Appcolor.black,
+              fontWeight: FontWeight.w600,
+              fontSize: 15,
+              letterSpacing: 0.5),
+        ),
+        shape: const RoundedRectangleBorder(
+            borderRadius: BorderRadius.only(
+          bottomLeft: Radius.circular(20),
+          bottomRight: Radius.circular(20),
+        )),
+      ),
+      body: SingleChildScrollView(
+        child: Screenshot(
+          controller: screenshotController,
+          child: Container(
+            color: Appcolor.white,
+            child: Form(
+              key: _formkey,
+              child: Column(
+                children: [
+                  Card(
+                    elevation: 3,
+                    margin: const EdgeInsets.all(10),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(15),
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 10),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const SizedBox(
+                            height: 15,
+                          ),
+                          SizedBox(
+                            height: 45,
+                            child: TextFormField(
+                              controller: _ageController,
+                              keyboardType: TextInputType.number,
+                              inputFormatters: <TextInputFormatter>[
+                                FilteringTextInputFormatter.digitsOnly
+                              ],
+                              decoration: InputDecoration(
+                                contentPadding: const EdgeInsets.only(left: 10),
+                                labelText: "Your Age",
+                                hintText: "18 to 40 year",
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
+                              ),
+                            ),
+                          ),
+                          const SizedBox(
+                            height: 15,
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: const [
+                              Text("Retirement Age"),
+                              Text("60 Years")
+                            ],
+                          ),
+                          const SizedBox(
+                            height: 15,
+                          ),
+                          const Text("You want to receive Monthly Pension:"),
+                          const SizedBox(
+                            height: 5,
+                          ),
+                          Container(
+                                width: MediaQuery.of(context).size.width / 1,
+                                height: 45,
+                                decoration: BoxDecoration(
+                                    border: Border.all(color: Colors.grey),
+                                    borderRadius: BorderRadius.circular(10)),
+                                child: DropdownButtonHideUnderline(
+                                  child: DropdownButton(
+                                    value: dropdownvalue1,
+                                    icon: const Padding(
+                                      padding: EdgeInsets.only(right: 5),
+                                      child: Icon(Icons.keyboard_arrow_down,
+                                          size: 20),
+                                    ),
+                                    items: items1.map((String items) {
+                                      return DropdownMenuItem(
+                                        value: items,
+                                        child: Padding(
+                                          padding:
+                                              const EdgeInsets.only(left: 10),
+                                          child: Text(items,
+                                              style: const TextStyle(
+                                                  fontSize: 14)),
+                                        ),
+                                      );
+                                    }).toList(),
+                                    onChanged: (String? newValue) {
+                                      setState(() {
+                                        dropdownvalue1 = newValue!;
+                                      });
+                                    },
+                                  ),
+                                ),
+                              ),
+                              const SizedBox(
+                            height: 15,
+                          ),
+                          const Text("You will pay your Contributions:"),
+                          const SizedBox(
+                            height: 5,
+                          ),
+                          Container(
+                                width: MediaQuery.of(context).size.width / 1,
+                                height: 45,
+                                decoration: BoxDecoration(
+                                    border: Border.all(color: Colors.grey),
+                                    borderRadius: BorderRadius.circular(10)),
+                                child: DropdownButtonHideUnderline(
+                                  child: DropdownButton(
+                                    value: dropdownvalue2,
+                                    icon: const Padding(
+                                      padding: EdgeInsets.only(right: 5),
+                                      child: Icon(Icons.keyboard_arrow_down,
+                                          size: 20),
+                                    ),
+                                    items: items2.map((String items) {
+                                      return DropdownMenuItem(
+                                        value: items,
+                                        child: Padding(
+                                          padding:
+                                              const EdgeInsets.only(left: 10),
+                                          child: Text(items,
+                                              style: const TextStyle(
+                                                  fontSize: 14)),
+                                        ),
+                                      );
+                                    }).toList(),
+                                    onChanged: (String? newValue) {
+                                      setState(() {
+                                        dropdownvalue2 = newValue!;
+                                      });
+                                    },
+                                  ),
+                                ),
+                              ),
+                          const SizedBox(
+                            height: 15,
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: [
+                              ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                    backgroundColor: Appcolor.red400),
+                                onPressed: () {},
+                                child: const Text(
+                                  "    Reset    ",
+                                  style: TextStyle(color: Appcolor.white),
+                                ),
+                              ),
+                              ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                    backgroundColor: Appcolor.primaryColor),
+                                onPressed: () {
+                                  FocusScope.of(context).unfocus();
+                                },
+                                child: const Text(
+                                  "Calculate",
+                                  style: TextStyle(color: Appcolor.white),
+                                ),
+                              ),
+                            ],
+                          ),
+                          const SizedBox(
+                            height: 15,
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+
+                  //Condition to be applied here for results.
+
+                  Column(
+                      children: [
+                        Card(
+                          elevation: 2,
+                          margin: const EdgeInsets.symmetric(vertical: 15, horizontal: 10),
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(5)),
+                          child: Padding(
+                            padding: const EdgeInsets.all(10.0),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: const [
+                                Text(
+                                  "Monthly Contribution",
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      letterSpacing: 1,
+                                      color: Appcolor.primaryColor),
+                                ),
+                                Text(
+                                  "₹...",
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      letterSpacing: 1,
+                                      color: Appcolor.primaryColor),
+                                )
+                              ],
+                            ),
+                          ),
+                        ),
+                        Card(
+                          elevation: 2,
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(15)),
+                          margin: const EdgeInsets.symmetric(vertical: 15, horizontal: 10),
+                          child: Padding(
+                            padding: const EdgeInsets.only(
+                                top: 15, left: 15, right: 15),
+                            child: Column(
+                              children: [
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    SizedBox(
+                                        width:
+                                            MediaQuery.of(context).size.width *
+                                                0.42,
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: const [
+                                            Text("Contribution Period"),
+                                            Divider(),
+                                            Text("Total Contribution"),
+                                            Divider(),
+                                            Text("Amount to Nominees"),
+                                          ],
+                                        )),
+                                    SizedBox(
+                                      width: MediaQuery.of(context).size.width *
+                                          0.42,
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.end,
+                                        children: const [
+                                          Text("₹..."),
+                                          Divider(),
+                                          Text(("₹...")),
+                                          Divider(),
+                                          Text("₹..."),
+                                        ],
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                const Divider(),
+                                Row(
+                                  children: [
+                                    const CircleAvatar(
+                                      radius: 5,
+                                      backgroundColor: Appcolor.primaryColor,
+                                    ),
+                                    const SizedBox(
+                                      width: 8,
+                                    ),
+                                    SizedBox(
+                                      width: MediaQuery.of(context).size.width /
+                                          1.25,
+                                      child: const Text(
+                                          "You need to pay ₹... every month till you reach retirement.",
+                                          style: TextStyle(fontSize: 13)),
+                                    ),
+                                  ],
+                                ),
+                                const Divider(),
+                                Row(
+                                  children: [
+                                    const CircleAvatar(
+                                      radius: 5,
+                                      backgroundColor: Appcolor.primaryColor,
+                                    ),
+                                    const SizedBox(
+                                      width: 8,
+                                    ),
+                                    SizedBox(
+                                      width: MediaQuery.of(context).size.width /
+                                          1.25,
+                                      child: const Text(
+                                          "You will be paying a total of ₹... during your contribution period of  ... years.",
+                                          style: TextStyle(fontSize: 13)),
+                                    ),
+                                  ],
+                                ),
+                                const Divider(),
+                                Row(
+                                  children: [
+                                    const CircleAvatar(
+                                      radius: 5,
+                                      backgroundColor: Appcolor.primaryColor,
+                                    ),
+                                    const SizedBox(
+                                      width: 8,
+                                    ),
+                                    SizedBox(
+                                      width: MediaQuery.of(context).size.width /
+                                          1.25,
+                                      child: const Text(
+                                          "After retirement you will get gauranteed monthly pension of ₹... till the end of your life.",
+                                          style: TextStyle(fontSize: 13)),
+                                    ),
+                                  ],
+                                ),
+                                const Divider(),
+                                Row(
+                                  children: [
+                                    const CircleAvatar(
+                                      radius: 5,
+                                      backgroundColor: Appcolor.primaryColor,
+                                    ),
+                                    const SizedBox(
+                                      width: 8,
+                                    ),
+                                    SizedBox(
+                                      width: MediaQuery.of(context).size.width /
+                                          1.25,
+                                      child: const Text(
+                                          "After that, your spouse will get gauranteed monthly pension of ₹... till the end of your life.",
+                                          style: TextStyle(fontSize: 13)),
+                                    ),
+                                  ],
+                                ),
+                                const Divider(),
+                                Row(
+                                  children: [
+                                    const CircleAvatar(
+                                      radius: 5,
+                                      backgroundColor: Appcolor.primaryColor,
+                                    ),
+                                    const SizedBox(
+                                      width: 8,
+                                    ),
+                                    SizedBox(
+                                      width: MediaQuery.of(context).size.width /
+                                          1.25,
+                                      child: const Text(
+                                          "After that, your nominees will get guaranteed lump sum retirement wealth of ₹... .",
+                                          style: TextStyle(fontSize: 13)),
+                                    ),
+                                  ],
+                                ),
+                                const Divider(),
+                                Card(
+                                  color: Appcolor.grey200,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(8),
+                                  ),
+                                  child: InkWell(
+                                    borderRadius: BorderRadius.circular(8),
+                                    onTap: () async {
+                                      clickCountFunction();
+                                      await screenshotController
+                                          .capture(
+                                              pixelRatio: MediaQuery.of(context)
+                                                  .devicePixelRatio,
+                                              delay: const Duration(
+                                                  milliseconds: 10))
+                                          .then((image) async {
+                                        if (image != null) {
+                                          final directory =
+                                              await getApplicationSupportDirectory();
+                                          final imagePath = await File(
+                                                  '${directory.path}/image.png')
+                                              .create();
+                                          await imagePath.writeAsBytes(image);
+                                          await Share.shareFiles(
+                                              [imagePath.path]);
+                                        }
+                                      });
+                                    },
+                                    child: Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 8.0, vertical: 5),
+                                      child: Row(children: [
+                                        SvgPicture.asset(
+                                          'assets/svg/jpg.svg',
+                                          height: 30,
+                                        ),
+                                        const SizedBox(
+                                          width: 8,
+                                        ),
+                                        const Text(
+                                          "JPG",
+                                          style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            color: Appcolor.primaryColor,
+                                            letterSpacing: 1,
+                                          ),
+                                        ),
+                                        const SizedBox(
+                                          width: 8,
+                                        ),
+                                      ]),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                ],
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}

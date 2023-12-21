@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "843335153502",
+    "project_id": "emi-calculator-e4cef",
+    "storage_bucket": "emi-calculator-e4cef.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:843335153502:android:c839a763e11208b2ba81cf",
+        "android_client_info": {
+          "package_name": "com.emi_calculator.emi_infomation"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "843335153502-qmjme6pk36okt1e4j7v89d35rehn47cb.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCeHVTOkC_pHlQ0B-ogz-t_6lWICerwCnM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "843335153502-qmjme6pk36okt1e4j7v89d35rehn47cb.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
